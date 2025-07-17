@@ -1,5 +1,48 @@
-Cloudflare DDNS 动态域名更新脚本一个简单、强大且“一劳永逸”的 Shell 脚本，用于自动更新 Cloudflare 上的 DNS 记录，使其始终指向您服务器的当前动态 IP 地址。解决什么问题？ 🤔很多时候，我们的 VPS 或家用服务器的公网 IP 地址不是固定的，会经常变化。这会导致我们无法通过固定的 IP 地址来 SSH 连接服务器或访问上面部署的服务。本脚本通过利用 Cloudflare 强大的 API，完美地解决了这个问题。它会自动检测您服务器的 IP 变动，并更新您在 Cloudflare 上的 DNS 解析记录。从此，您只需记住一个域名，即可随时随地连接到您的服务器。✨ 功能特性🚀 一键部署: 一行命令即可完成所有依赖安装和环境配置。💬 交互式配置: 脚本会像聊天一样引导您输入必要信息，无需手动修改任何配置文件。🧩 智能依赖检查: 自动检测并提示安装 curl, jq 等核心依赖。💻 跨平台兼容: 支持主流的 Linux 发行版，如 Debian, Ubuntu, CentOS, RHEL, Fedora 等。⏰ 稳定可靠: 使用系统内置的 cron 定时任务，每 5 分钟检查一次，稳定且资源占用极低。📄 清晰日志: 所有操作都会被记录到日志文件中，方便排查问题。快速开始 🚀在您的服务器上，根据对应的操作系统，复制并执行以下一行命令即可。适用于 Debian / Ubuntuapt update && apt -y install curl wget jq cron && wget -N -O /usr/local/bin/cf-ddns.sh https://raw.githubusercontent.com/0xdabiaoge/Cloudflare-DDNS/main/Cloudflare-DDNS.sh && chmod +x /usr/local/bin/cf-ddns.sh && ln -sf /usr/local/bin/cf-ddns.sh /usr/local/bin/cfddns && cfddns
-适用于 CentOS / RHEL / Fedorayum -y install curl wget jq cronie || dnf -y install curl wget jq cronie && wget -N -O /usr/local/bin/cf-ddns.sh https://raw.githubusercontent.com/0xdabiaoge/Cloudflare-DDNS/main/Cloudflare-DDNS.sh && chmod +x /usr/local/bin/cf-ddns.sh && ln -sf /usr/local/bin/cf-ddns.sh /usr/local/bin/cfddns && cfddns
-📝 使用方法复制上面对应您系统的“一键命令”，并粘贴到您的服务器终端中执行。脚本会自动开始，并引导您输入以下信息：Cloudflare API 令牌 (Token)您的根域名 (例如: yourdomain.com)您要用于 DDNS 的完整域名 (例如: server.yourdomain.com)输入完毕后，脚本会自动完成所有配置，包括创建核心脚本、设置权限和添加定时任务。大功告成！系统现在会自动维护您的域名解析。准备工作 (Prerequisites)在运行脚本之前，请确保您已经准备好以下三样东西：一个托管在 Cloudflare 上的域名。一个 Cloudflare API 令牌。前往 Cloudflare 仪表板 -> 我的个人资料 -> API 令牌。点击 创建令牌，然后使用 编辑区域 DNS 这个模板。在 区域资源 部分，选择您要操作的域名。创建并复制好生成的令牌。一个提前创建好的 A 记录。在您的 Cloudflare DNS 管理页面，为您的子域名（例如 server）创建一个 A 记录。IP 地址可以随便填写一个，脚本会自动更新它。重要: 代理状态必须设置为 仅限 DNS (云朵必须是灰色的)。📜 日志与管理脚本的所有操作日志都保存在以下文件中，方便您随时查看。查看完整日志:cat /var/log/cf_ddns.log
-实时跟踪日志:tail -f /var/log/cf_ddns.log
-授权许可本项目采用 MIT License 授权。
+## **Cloudflare DDNS 动态域名更新脚本**
+- **一个简单、强大且“一劳永逸”的 Shell 脚本，用于自动更新 Cloudflare 上的 DNS 记录，使其始终指向您服务器的当前动态 IP 地址。**
+- 
+## **原作者项目地址**
+- **https://github.com/Devmiston/sing-box**
+
+## **修改的地方**
+- **只保留了sing-box最新稳定版的安装方式**
+- **移除了部分节点协议类型，节点管理中显示节点类型和监听端口**
+- **只生成Yaml配置文件，适用于Clash**
+- **脚本修改全程由AI完成，难免出现BUG，仅在Debian、Ubuntu系统下测试使用**
+
+## **安装**
+### **Debian&&Ubuntu使用以下命令安装依赖**
+```
+apt update && apt -y install curl wget tar socat jq git openssl dnsutils xxd net-tools cron unzip
+```
+### **使用以下命令运行脚本**
+
+- **使用以下命令运行脚本**
+```
+wget -N -O /usr/local/bin/sb.sh https://raw.githubusercontent.com/0xdabiaoge/singbox-lite/main/singbox-lite.sh && chmod +x /usr/local/bin/sb.sh && ln -sf /usr/local/bin/sb.sh /usr/local/bin/sb && sb
+```
+## **使用方法**
+- **如果开启ECH配置则不会生成Clash客户端配置文件。**
+- **Clash客户端配置文件位于/usr/local/etc/sing-box/clash.yaml，下载后加载到 clash verge 客户端即可使用。**
+- **节点信息查看: 所有创建的节点信息都会汇总保存在 /usr/local/etc/sing-box/output.txt 中，方便随时查看。**
+- **卸载脚本: 在脚本主菜单选择 20 即可完全卸载，此操作会干净地移除所有相关文件、服务和定时任务，并自动删除脚本本身。**
+
+## **脚本支持的节点类型**
+- **SOCKS**
+- **Direct (端口转发)**
+- **VMess (+TCP/WS/gRPC, 可选 TLS)**
+- **VLESS (+TCP/WS, 可选 REALITY)**
+- **TUIC**
+- **Juicity**
+- **Trojan (+TCP/WS/gRPC, 需 TLS)**
+- **Hysteria**
+- **Hysteria2**
+- **ShadowTLS**
+- **NaiveProxy**
+- **Shadowsocks**
+- **WireGuard (WARP 解锁)** 
+
+## **免责声明**
+- **本项目仅供学习与技术交流，请在下载后 24 小时内删除，禁止用于商业或非法目的。**
+- **使用本脚本所搭建的服务，请严格遵守部署服务器所在地、服务提供商和用户所在国家/地区的相关法律法规。**
+- **对于任何因不当使用本脚本而导致的法律纠纷或后果，脚本作者及维护者概不负责。**
