@@ -12,7 +12,7 @@
 - **📄 清晰日志: 所有操作都会被记录到日志文件中，方便排查问题。**
 
 ## **快速开始 🚀**
-- **在您的服务器上，根据对应的操作系统，复制并执行以下一行命令即可。**
+- **在您的服务器上，根据对应的操作系统，复制并执行以下一行命令即可。快捷命令方式：cfddns**
 - **适用于 Debian / Ubuntu**
 ```
 apt update && apt -y install curl wget jq cron && wget -N -O /usr/local/bin/cf-ddns.sh https://raw.githubusercontent.com/0xdabiaoge/Cloudflare-DDNS/main/Cloudflare-DDNS.sh && chmod +x /usr/local/bin/cf-ddns.sh && ln -sf /usr/local/bin/cf-ddns.sh /usr/local/bin/cfddns && cfddns
